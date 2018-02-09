@@ -3,6 +3,7 @@ package nostale;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import nostale.data.AccountData;
 import nostale.resources.FileLoader;
 
 public class Config {
@@ -10,7 +11,6 @@ public class Config {
 	public static String HASH = "639A66B66F59C9865459AD7BD7FE748E6E25A9C17BF35FD8F7752FF9C19D0823";
 	public static String version = "0.9.3.3081";
 	
-	//TODO USE ME
 	public static void load()
 	{
 		String[] file = FileLoader.loadFile("config.ini");
@@ -25,7 +25,7 @@ public class Config {
 		}
 	}
 	
-	/*public static HashMap<String,AccountData> loadAccounts()
+	public static HashMap<String,AccountData> loadAccounts()
 	{
 		HashMap<String,AccountData> toRet = new HashMap<String,AccountData>();
 		String[] file = FileLoader.loadFile("accounts");
@@ -36,5 +36,4 @@ public class Config {
 		}
 		return toRet;
 	}
-	*/
 }

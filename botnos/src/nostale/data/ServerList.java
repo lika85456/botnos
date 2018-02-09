@@ -1,8 +1,5 @@
 package nostale.data;
 
-import nostale.data.Server;
-
-//DE, EN, FR, IT, PL, ES, CZ, RU, TR
 public class ServerList {
 	public static Server DE = new Server("79.110.84.75", 4001);
 	public static Server EN = new Server("79.110.84.75", 4000);

@@ -2,38 +2,44 @@ package nostale.packet;
 
 
 public class Packet {
-	
+	public PacketType packetType; // If its received or send
 	public String packetString; // Whole packet in string
-	
-	private String[] parameters;
-	private boolean parsed = false;
-	
-	public String getParameter(int index)
-	{
-		if(parsed==false)
-		{
-			parsed = true;
-			parameters = packetString.split(" ");
-		}
+	public String name; // Name of packet, example - walk x x -> name = walk
+	protected String[] parameters;
+
+
+	/**
+	 * New packet from string
+	 * 
+	 * @param str
+	 */
+
+	public Packet(String str) {
+		this.packetString = str;
+		this.parameters = str.split(" ");
+		this.name = parameters[0];
+	}
+
+	public String getParameter(int index) {
+		return parameters[index];
+	}
+
+	public int getIntParameter(int index) {
 		try {
-			return parameters[index];
+			return Integer.parseInt(parameters[index]);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		catch(Exception e)
-		{
-			return null;
-		}
-		
+		return 0;
 	}
-	
-	public Packet(String packet)
+	public int gip(int index)
 	{
-		this.packetString = packet;
+		return getIntParameter(index);
 	}
-	
+
 	@Override
-	public String toString()
-	{
-		return packetString;
+	public String toString() {
+		return this.packetString;
 	}
 
 }

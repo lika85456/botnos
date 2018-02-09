@@ -1,0 +1,347 @@
+dir 1 {CharacterId} {Direction}
+rc 1 {CharacterId} {characterHealth} 0
+
+list += $"{bz.BazaarItem.BazaarItemId}|{bz.BazaarItem.SellerId}|{bz.Item.ItemVNum}|{SoldedAmount}|{Amount}|{(Package ? 1 : 0)}|{Price}|{Status}|{MinutesLeft}|{(IsNosbazar ? 1 : 0)}|0|{bz.Item.Rare}|{bz.Item.Upgrade}|{info} ";
+return $"rc_slist {packet.Index} {list}";
+
+itembazar += $"{bzlink.BazaarItem.BazaarItemId}|{bzlink.BazaarItem.SellerId}|{bzlink.Owner}|{bzlink.Item.Item.VNum}|{bzlink.Item.Amount}|{(bzlink.BazaarItem.IsPackage ? 1 : 0)}|{bzlink.BazaarItem.Price}|{time}|2|0|{bzlink.Item.Rare}|{bzlink.Item.Upgrade}|{info} ";
+return $"rc_blist {packet.Index} {itembazar} ";
+
+cancel 0 0 - casting spell canceled
+
+su 1 {Session.Character.CharacterId} 1 {Session.Character.CharacterId} {ski.Skill.SkillVNum} {ski.Skill.Cooldown} {ski.Skill.AttackAnimation} {skillinfo?.Skill.Effect ?? ski.Skill.Effect} {Session.Character.PositionX} {Session.Character.PositionY} 1 {((int)((double)Session.Character.Hp / Session.Character.HPLoad()) * 100)} 0 -2 {ski.Skill.SkillType - 1}
+su 1 {Session.Character.CharacterId} 1 {targetId} {ski.Skill.SkillVNum} {ski.Skill.Cooldown} {ski.Skill.AttackAnimation} {ski.Skill.Effect} {Session.Character.PositionX} {Session.Character.PositionY} 1 {((int)((double)Session.Character.Hp / Session.Character.HPLoad()) * 100)} 0 -1 {ski.Skill.SkillType - 1}
+ct 1 {Session.Character.CharacterId} 1 {Session.Character.CharacterId} {ski.Skill.CastAnimation} {ski.Skill.CastEffect} {ski.Skill.SkillVNum}
+sr {castingId} - restart skill cooldown
+
+req_exc 1 374541 - požádání o request
+dlg #req_exc^2^351883 #req_exc^5^351883 Pøijmout smìnu od Helèa258? - request income
+#req_exc^2^351883 = prijmout
+#req_exc^5^351883 = odmitnout
+exc_list 1 351883 -1 - vymena prijata
+
+IN PACKET in 1 {(Authority == AuthorityType.Moderator ? $"[{Language.Instance.GetMessageFromKey("SUPPORT")}]" + name : name)} - {CharacterId} {PositionX} {PositionY} {Direction} {(Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : (byte)Authority)} {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (long)Group?.GroupId : -1)} {(fairy != null ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} 0 {(UseSp || IsVehicled ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} {(foe ? -1 : Family?.FamilyId ?? -1)} {(foe ? name : Family?.Name ?? "-")} {(GetDignityIco() == 1 ? GetReputIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} {Family?.FamilyLevel ?? 0} {ArenaWinner} {(Authority == AuthorityType.Moderator ? 500 : Compliment)} {Size} {HeroLevel}";
+
+
+
+
+//*************SP HANDLING*************
+[.Send | 20:20:00.] sl 0
+[.Recv | 20:20:00.] delay 5000 3 #sl^1 
+[.Send | 20:20:00.] guri 2
+[.Send | 20:20:00.] guri 5 1 351883 0 3
+[.Recv | 20:20:00.] guri 2 1 351883
+[.Send | 20:20:01.] guri 5 1 351883 20 3
+[.Recv | 20:20:01.] sc_p 7 670 200547 69 1000 30786 2 3 491 619 70 4 70 4 278 444 253 444 292 2 60 80 70 60 4454 24595 7576 14452 0 4119800 1 Ledniška 0
+[.Recv | 20:20:01.] eff 2 200547 3007
+[.Recv | 20:20:01.] eff 2 200549 3007
+[.Recv | 20:20:01.] stat 7844 7844 2359 3763 0 1056
+[.Recv | 20:20:01.] st 2 200547 69 0 18 52 4474 7596
+[.Send | 20:20:02.] guri 5 1 351883 40 3
+[.Send | 20:20:03.] guri 5 1 351883 60 3
+[.Recv | 20:20:03.] stat 7844 7844 2359 3763 0 1056
+[.Recv | 20:20:03.] stat 7844 7844 2404 3763 0 1056
+[.Recv | 20:20:03.] st 2 200547 69 0 18 52 4494 7616
+[.Send | 20:20:04.] guri 5 1 351883 80 3
+[.Send | 20:20:05.] guri 5 1 351883 100 3
+[.Send | 20:20:05.] #sl^1
+[.Recv | 20:20:05.] vb 340 0 0
+[.Recv | 20:20:05.] vb 339 0 0
+[.Recv | 20:20:05.] vb 472 0 0
+[.Recv | 20:20:05.] vb 471 0 0
+[.Recv | 20:20:05.] vb 634 0 0
+[.Recv | 20:20:05.] vb 635 0 0
+[.Recv | 20:20:05.] cond 1 351883 0 0 13
+[.Recv | 20:20:05.] sc 1 6 1237 1330 666 8 140 0 5 1119 1160 543 13 200 5 253 481 300 481 319 9 7 40 81
+[.Recv | 20:20:05.] stat 7844 9322 2404 4587 1 1056
+[.Recv | 20:20:05.] c_mode 1 351883 24 11 0 0
+[.Recv | 20:20:05.] ski 1154 1154 1154 1155 1156 1157 1158 1159 1160 1161 1162 1163 1164 1165 1166 1167 20 24 28 52 357 363
+[.Recv | 20:20:05.] qslot 0 1.1.1 1.1.2 1.1.7 1.1.5 1.1.8 1.3.2 0.1.42 0.1.46 0.1.37 1.3.1
+[.Recv | 20:20:05.] qslot 1 0.7.-1 1.1.6 1.1.9 1.1.4 1.1.10 1.1.1 1.1.2 1.1.3 1.1.4 1.1.8
+[.Recv | 20:20:05.] qslot 2 1.3.2 0.1.42 0.2.4 0.7.-1 1.3.1 1.1.6 1.1.7 1.1.5 1.1.9 1.1.10
+[.Recv | 20:20:05.] sp 479784 1000000 10000 10000
+[.Recv | 20:20:05.] lev 74 36842520 99 0 119713000 5991794 366610 126 0 0 3 0
+[.Recv | 20:20:05.] stat 7844 9322 2404 4587 1 1056
+[.Recv | 20:20:05.] eff 1 351883 196
+[.Recv | 20:20:05.] guri 6 1 351883 0 0
+[.Recv | 20:20:05.] stat 7877 9322 2404 4587 0 1056
+[.Recv | 20:20:05.] st 2 200547 69 0 18 52 4514 7636
+[.Recv | 20:20:06.] eff 2 200547 3007
+[.Recv | 20:20:06.] eff 2 200549 3007
+[.Recv | 20:20:07.] stat 7910 9322 2404 4587 0 1056
+[.Recv | 20:20:07.] stat 7910 9322 2449 4587 0 1056
+[.Recv | 20:20:07.] st 2 200547 69 0 18 52 4534 7656
+[.Send | 20:20:08.] sl 0
+[.Recv | 20:20:08.] say 1 351883 11 Èas vedlejšího efektu transformace: 30 sek.
+[.Recv | 20:20:08.] sd 30
+[.Recv | 20:20:08.] vb 340 0 0
+[.Recv | 20:20:08.] vb 339 0 0
+[.Recv | 20:20:08.] vb 472 0 0
+[.Recv | 20:20:08.] vb 471 0 0
+[.Recv | 20:20:08.] vb 634 0 0
+[.Recv | 20:20:08.] vb 635 0 0
+[.Recv | 20:20:08.] cond 1 351883 0 0 12
+[.Recv | 20:20:08.] sc 1 6 551 644 616 6 130 0 5 433 474 493 11 190 5 239 481 286 481 305 2 2 32 63
+[.Recv | 20:20:08.] stat 7910 7844 2449 3763 1 1056
+[.Recv | 20:20:08.] c_mode 1 351883 0 0 0 0
+[.Recv | 20:20:08.] guri 6 1 351883 0 0
+[.Recv | 20:20:08.] ms_c 1
+[.Recv | 20:20:08.] ski 240 241 240 241 242 243 244 245 247 249 252 254 236 20 24 28 52 357 363
+[.Recv | 20:20:08.] qslot 0 1.1.2 1.1.7 1.1.12 1.1.4 1.1.3 1.3.2 0.7.-1 0.7.-1 0.7.-1 1.3.1
+[.Recv | 20:20:08.] qslot 1 1.1.14 0.7.-1 7.7.-1 7.7.-1 0.1.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1
+[.Recv | 20:20:08.] qslot 2 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1 7.7.-1
+[.Recv | 20:20:08.] sp 479784 1000000 10000 10000
+[.Recv | 20:20:08.] lev 74 36842520 80 12 119713000 790000 366610 126 0 0 3 0
+[.Recv | 20:20:08.] stat 7844 7844 2449 3763 1 1056
+
+
+
+//*********DIE**********
+[.Send | 16:22:31.] ncif 3 2144
+[.Recv | 16:22:32.] st 3 2144 5 0 100 100 238 31
+[.Send | 16:22:32.] walk 127 147 1 11
+[.Recv | 16:22:32.] stat 410 410 155 155 0 1024
+[.Recv | 16:22:32.] cond 1 374541 0 0 11
+[.Recv | 16:22:32.] cond 1 374541 0 0 11
+[.Send | 16:22:32.] walk 126 147 0 11
+[.Recv | 16:22:32.] cond 1 374541 0 0 11
+[.Recv | 16:22:32.] cond 1 374541 0 0 11
+[.Send | 16:22:32.] ncif 3 2144
+[.Recv | 16:22:33.] st 3 2144 5 0 100 100 238 31
+[.Send | 16:22:33.] u_s 0 3 2144
+[.Recv | 16:22:33.] stat 410 410 155 155 0 1024
+[.Recv | 16:22:33.] ct 1 374541 3 2144 -1 -1 200
+[.Recv | 16:22:33.] su 1 374541 3 2144 200 6 11 200 0 0 1 83 39 0 0
+[.Send | 16:22:33.] ncif 3 2144
+[.Recv | 16:22:34.] sr 0
+[.Recv | 16:22:34.] st 3 2144 5 0 83 100 199 31
+[.Send | 16:22:34.] u_s 0 3 2144
+[.Recv | 16:22:34.] ct 3 2144 1 374541 -1 -1 0
+[.Recv | 16:22:34.] su 3 2144 1 374541 0 12 11 200 0 0 1 90 39 0 0
+[.Recv | 16:22:34.] stat 371 410 155 155 0 1024
+[.Recv | 16:22:34.] stat 371 410 155 155 0 1024
+[.Recv | 16:22:34.] ct 1 374541 3 2144 -1 -1 200
+[.Recv | 16:22:34.] su 1 374541 3 2144 200 6 11 200 0 0 1 69 33 0 0
+[.Send | 16:22:34.] ncif 3 2144
+[.Recv | 16:22:35.] st 3 2144 5 0 69 100 166 31
+[.Recv | 16:22:35.] sr 0
+[.Send | 16:22:35.] walk 127 147 1 11
+[.Recv | 16:22:35.] cond 1 374541 0 0 11
+[.Recv | 16:22:35.] cond 1 374541 0 0 11
+[.Send | 16:22:35.] ncif 3 2144
+[.Recv | 16:22:36.] st 3 2144 5 0 69 100 166 31
+[.Send | 16:22:36.] ncif 3 2144
+[.Recv | 16:22:37.] st 3 2144 5 0 69 100 166 31
+[.Recv | 16:22:37.] ct 3 2144 1 374541 0 535 425
+[.Recv | 16:22:37.] su 3 2144 1 374541 425 100 12 200 0 0 1 79 44 0 0
+[.Recv | 16:22:37.] stat 327 410 155 155 0 1024
+[.Recv | 16:22:37.] guri 3 3 2144 125 146 3 2 2 11
+[.Send | 16:22:38.] ncif 3 2144
+[.Recv | 16:22:38.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:39.] ncif 3 2144
+[.Recv | 16:22:39.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:40.] ncif 3 2144
+[.Recv | 16:22:40.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:41.] ncif 3 2144
+[.Recv | 16:22:41.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:42.] ncif 3 2144
+[.Recv | 16:22:42.] st 3 2144 5 0 69 3 166 1
+[.Recv | 16:22:42.] ct 3 2144 1 374541 -1 -1 0
+[.Recv | 16:22:42.] stat 342 410 155 155 0 1024
+[.Recv | 16:22:42.] stat 342 410 155 155 0 1024
+[.Recv | 16:22:42.] su 3 2144 1 374541 0 12 11 200 0 0 1 73 42 0 0
+[.Recv | 16:22:42.] stat 300 410 155 155 0 1024
+[.Send | 16:22:43.] ncif 3 2144
+[.Recv | 16:22:43.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:44.] ncif 3 2144
+[.Recv | 16:22:44.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:45.] walk 123 147 0 11
+[.Send | 16:22:45.] ncif 3 2144
+[.Recv | 16:22:45.] cond 1 374541 0 0 11
+[.Recv | 16:22:45.] cond 1 374541 0 0 11
+[.Recv | 16:22:45.] st 3 2144 5 0 69 3 166 1
+[.Send | 16:22:45.] ncif 3 2133
+[.Send | 16:22:46.] walk 120 144 0 11
+[.Recv | 16:22:46.] st 3 2133 4 0 100 100 216 25
+[.Recv | 16:22:46.] cond 1 374541 0 0 11
+[.Recv | 16:22:46.] cond 1 374541 0 0 11
+[.Send | 16:22:46.] walk 122 144 0 11
+[.Recv | 16:22:46.] stat 315 410 155 155 0 1024
+[.Recv | 16:22:46.] stat 315 410 155 155 0 1024
+[.Recv | 16:22:46.] cond 1 374541 0 0 11
+[.Recv | 16:22:46.] cond 1 374541 0 0 11
+[.Send | 16:22:46.] ncif 3 2133
+[.Send | 16:22:47.] u_s 0 3 2133
+[.Recv | 16:22:47.] st 3 2133 4 0 100 100 216 25
+[.Recv | 16:22:47.] stat 315 410 155 155 0 1024
+[.Recv | 16:22:47.] ct 1 374541 3 2133 -1 -1 200
+[.Recv | 16:22:47.] su 1 374541 3 2133 200 6 11 200 0 0 1 81 41 0 0
+[.Send | 16:22:47.] ncif 3 2131
+[.Recv | 16:22:47.] sr 0
+[.Recv | 16:22:48.] st 3 2131 4 0 100 100 216 25
+[.Send | 16:22:48.] u_s 0 3 2131
+[.Recv | 16:22:48.] stat 315 410 155 155 0 1024
+[.Recv | 16:22:48.] ct 1 374541 3 2131 -1 -1 200
+[.Recv | 16:22:48.] su 1 374541 3 2131 200 6 11 200 0 0 1 69 65 3 0
+[.Send | 16:22:48.] ncif 3 2131
+[.Recv | 16:22:49.] ct 3 2131 1 374541 -1 -1 0
+[.Recv | 16:22:49.] sr 0
+[.Recv | 16:22:49.] st 3 2131 4 0 69 100 151 25
+[.Recv | 16:22:49.] su 3 2131 1 374541 0 12 11 200 0 0 1 68 33 0 0
+[.Recv | 16:22:49.] stat 282 410 155 155 0 1024
+[.Send | 16:22:49.] walk 118 144 1 11
+[.Send | 16:22:49.] ncif 3 2139
+[.Recv | 16:22:49.] cond 1 374541 0 0 11
+[.Recv | 16:22:49.] cond 1 374541 0 0 11
+[.Recv | 16:22:49.] st 3 2139 5 0 100 100 238 31
+[.Send | 16:22:49.] walk 117 145 1 11
+[.Send | 16:22:49.] ncif 3 2139
+[.Recv | 16:22:49.] cond 1 374541 0 0 11
+[.Recv | 16:22:49.] cond 1 374541 0 0 11
+[.Recv | 16:22:50.] st 3 2139 5 0 100 100 238 31
+[.Send | 16:22:50.] u_s 0 3 2139
+[.Send | 16:22:50.] ncif 3 2139
+[.Recv | 16:22:51.] stat 282 410 155 155 0 1024
+[.Recv | 16:22:51.] ct 1 374541 3 2139 -1 -1 200
+[.Recv | 16:22:51.] su 1 374541 3 2139 200 6 13 205 0 0 1 75 59 3 0
+[.Recv | 16:22:51.] st 3 2139 5 0 75 100 179 31
+[.Recv | 16:22:51.] ct 3 2139 1 374541 -1 -1 0
+[.Send | 16:22:51.] walk 119 146 1 11
+[.Recv | 16:22:51.] su 3 2139 1 374541 0 12 11 200 0 0 1 61 31 0 0
+[.Recv | 16:22:51.] stat 251 410 155 155 0 1024
+[.Recv | 16:22:51.] sr 0
+[.Recv | 16:22:51.] cond 1 374541 0 0 11
+[.Recv | 16:22:51.] cond 1 374541 0 0 11
+[.Send | 16:22:51.] ncif 3 2139
+[.Recv | 16:22:52.] st 3 2139 5 0 75 100 179 31
+[.Send | 16:22:53.] ncif 3 2139
+[.Recv | 16:22:53.] ct 3 2131 1 374541 -1 -1 0
+[.Recv | 16:22:53.] st 3 2139 5 0 75 100 179 31
+[.Recv | 16:22:53.] su 3 2131 1 374541 0 12 11 200 0 0 1 52 37 0 0
+[.Recv | 16:22:53.] stat 214 410 155 155 0 1024
+[.Recv | 16:22:53.] ct 3 2144 1 374541 -1 -1 0
+[.Recv | 16:22:53.] su 3 2144 1 374541 0 12 11 200 0 0 1 42 39 0 0
+[.Recv | 16:22:53.] stat 175 410 155 155 0 1024
+[.Send | 16:22:54.] ncif 3 2139
+[.Recv | 16:22:54.] st 3 2139 5 0 75 100 179 31
+[.Recv | 16:22:54.] ct 3 2139 1 374541 0 535 425
+[.Recv | 16:22:54.] su 3 2139 1 374541 425 100 12 200 0 0 1 34 33 0 0
+[.Recv | 16:22:54.] stat 142 410 155 155 0 1024
+[.Recv | 16:22:54.] ct 3 2133 1 374541 -1 -1 0
+[.Recv | 16:22:54.] guri 3 3 2139 117 145 3 2 2 11
+[.Recv | 16:22:54.] su 3 2133 1 374541 0 12 11 200 0 0 1 27 29 0 0
+[.Recv | 16:22:54.] stat 113 410 155 155 0 1024
+[.Send | 16:22:55.] ncif 3 2139
+[.Recv | 16:22:55.] st 3 2139 5 0 75 3 179 1
+[.Send | 16:22:56.] ncif 3 2139
+[.Recv | 16:22:56.] st 3 2139 5 0 75 3 179 1
+[.Recv | 16:22:56.] ct 3 2144 1 374541 -1 -1 0
+[.Recv | 16:22:56.] su 3 2144 1 374541 0 12 11 200 0 0 1 15 48 0 0
+[.Recv | 16:22:56.] stat 65 410 155 155 0 1024
+[.Recv | 16:22:56.] ct 3 2131 1 374541 -1 -1 0
+[.Recv | 16:22:57.] su 3 2131 1 374541 0 12 11 200 0 0 1 8 31 0 0
+[.Recv | 16:22:57.] stat 34 410 155 155 0 1024
+[.Send | 16:22:57.] ncif 3 2139
+[.Recv | 16:22:57.] st 3 2139 5 0 75 3 179 1
+[.Send | 16:22:58.] ncif 3 2139
+[.Recv | 16:22:58.] st 3 2139 5 0 75 3 179 1
+[.Recv | 16:22:59.] ct 3 2133 1 374541 -1 -1 0
+[.Send | 16:22:59.] ncif 3 2139
+[.Recv | 16:22:59.] su 3 2133 1 374541 0 12 11 200 0 0 0 0 39 0 0
+[.Recv | 16:22:59.] stat 0 410 155 155 0 1024
+[.Recv | 16:22:59.] vb 340 0 0
+[.Recv | 16:22:59.] vb 339 0 0
+[.Recv | 16:22:59.] vb 472 0 0
+[.Recv | 16:22:59.] vb 471 0 0
+[.Recv | 16:22:59.] vb 634 0 0
+[.Recv | 16:22:59.] vb 635 0 0
+[.Recv | 16:22:59.] eff_ob  -1 -1 0 4269
+[.Recv | 16:22:59.] st 3 2139 5 0 75 3 179 1
+[.Send | 16:23:00.] ncif 3 2139
+[.Recv | 16:23:00.] st 3 2139 5 0 75 3 179 1
+[.Send | 16:23:01.] ncif 3 2139
+[.Recv | 16:23:01.] st 3 2139 5 0 75 3 179 1
+[.Recv | 16:23:02.] dlg #revival^0 #revival^1 Pokraèovat odsud? Možné pro úroveò 20 nebo nižší.
+[.Send | 16:23:02.] ncif 3 2139
+[.Recv | 16:23:02.] st 3 2139 5 0 75 3 179 1
+[.Recv | 16:23:02.] stat 0 410 155 155 0 1024
+[.Recv | 16:23:02.] stat 0 410 155 155 0 1024
+[.Send | 16:23:03.] ncif 3 2139
+[.Recv | 16:23:03.] st 3 2139 5 0 75 3 179 1
+[.Send | 16:23:04.] ncif 3 2139
+[.Recv | 16:23:04.] st 3 2139 5 0 75 3 179 1
+[.Recv | 16:23:04.] stat 0 410 155 155 0 1024
+[.Send | 16:23:04.] #revival^1
+[.Recv | 16:23:04.] c_map 0 2 0
+[.Recv | 16:23:04.] mapout
+[.Send | 16:23:04.] c_close 1
+[.Send | 16:23:04.] c_close 0
+[.Send | 16:23:04.] f_stash_end 
+[.Send | 16:23:04.] c_close 1
+[.Recv | 16:23:04.] c_info Brgeaohgáad - -1 -1 - 374541 0 1 0 9 0 1 0 0 0 0 0 0
+[.Send | 16:23:04.] c_close 1
+[.Recv | 16:23:04.] c_mode 1 374541 0 0 0 0
+[.Recv | 16:23:04.] equip 0 -1 0.1.0.0.0 1.13.-1.0.0 5.8.0.0.0 10.8004.0.0.0
+[.Recv | 16:23:04.] lev 10 19800 15 8748 30360 12000 0 16 0 0 3 0
+[.Recv | 16:23:04.] stat 1 410 1 155 0 1024
+[.Recv | 16:23:04.] at 374541 1 81 113 2 0 0 1 -1
+[.Recv | 16:23:04.] cond 1 374541 0 0 11
+[.Recv | 16:23:04.] c_map 0 1 1
+[.Recv | 16:23:04.] sc 0 0 39 47 39 4 70 1 0 41 43 59 2 70 0 15 51 17 51 15 0 0 0 0
+[.Recv | 16:23:04.] gidx 1 374541 -1 - 0
+[.Recv | 16:23:04.] rsfp 0 -1
+[.Recv | 16:23:04.] pinit 0
+[.Recv | 16:23:04.] pairy 1 374541 4 3 30 4
+[.Recv | 16:23:04.] bgm2 0
+[.Recv | 16:23:04.] act6 
+[.Recv | 16:23:04.] tp 1 374541 81 113 0
+[.Recv | 16:23:04.] revive 1 374541 0
+[.Recv | 16:23:04.] pinit 0
+[.Recv | 16:23:04.] stat 1 410 1 155 0 1024
+[.Recv | 16:23:05.] gp 17 52 2580 -1 0 0
+[.Recv | 16:23:05.] gp 79 2 2 -1 1 0
+[.Recv | 16:23:05.] gp 80 66 147 20 2 0
+[.Recv | 16:23:05.] gp 117 177 145 -1 3 0
+[.Recv | 16:23:05.] gp 159 6 2550 -1 4 0
+[.Recv | 16:23:05.] gp 48 132 4995 3 5 0
+[.Recv | 16:23:05.] wp 134 36 0 1 1 99
+[.Recv | 16:23:05.] shop 2 2067 1 0 69 Podezøelý tygr
+[.Recv | 16:23:05.] shop 2 2066 1 0 53 Vloèka, Snìžná víla
+[.Recv | 16:23:05.] shop 2 2065 1 0 0 Santa Claus
+[.Recv | 16:23:05.] shop 2 2064 1 0 48 Manažer rodiny
+[.Recv | 16:23:05.] shop 2 2063 1 0 0 Highscore
+[.Recv | 16:23:05.] shop 2 2062 1 0 0 Hledaní
+[.Recv | 16:23:05.] shop 2 2061 1 0 0 Tulák Sam
+[.Recv | 16:23:05.] shop 2 2060 1 0 0 Teleport
+[.Recv | 16:23:05.] shop 2 2059 1 0 0 Spirála èasu
+[.Recv | 16:23:05.] shop 2 2058 1 0 4 Hra štìstí
+[.Recv | 16:23:05.] shop 2 2057 1 0 7 Alchymistický obchod
+[.Recv | 16:23:05.] shop 2 2056 1 0 5 Dùm módy
+[.Recv | 16:23:05.] shop 2 2055 1 0 6 Trh NosVille
+[.Recv | 16:23:05.] shop 2 2054 1 4 1 NosVille Info
+[.Recv | 16:23:05.] shop 2 2053 1 1 2 Mistr schopností
+[.Recv | 16:23:05.] shop 2 2052 1 0 3 Obchod s náøadím
+[.Recv | 16:23:06.] stat 16 410 1 155 0 1024
+[.Recv | 16:23:06.] stat 16 410 6 155 0 1024
+
+
+
+//***********DROP, PICKUP*********
+[.Recv | 17:13:52.] stat 410 410 155 155 0 1024
+[.Send | 17:13:53.] put 2 6 5
+[.Recv | 17:13:53.] ivn 2 6.-1.0.0
+[.Recv | 17:13:53.] drop 2024 736436 81 117 5 0 0
+[.Recv | 17:13:53.] ivn 2 6.-1.0.0
+[.Send | 17:13:54.] get 1 374541 736436
+[.Recv | 17:13:54.] stat 410 410 155 155 0 1024
+[.Recv | 17:13:54.] stat 410 410 155 155 0 1024
+[.Recv | 17:13:54.] ivn 2 6.2024.5.0
+[.Recv | 17:13:54.] say 1 374541 12 Obdržel/a jsi item:Sušenky x 5
+[.Recv | 17:13:54.] icon 1 374541 1 2024
+[.Recv | 17:13:54.] get 1 374541 736436 0
+
+
+
+
+
+

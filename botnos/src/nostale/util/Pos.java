@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import nostale.data.MonsterMapInstance;
+import nostale.gameobject.Player;
 import nostale.resources.Map;
 
 public class Pos {

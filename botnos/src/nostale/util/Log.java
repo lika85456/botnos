@@ -3,6 +3,8 @@ package nostale.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import Database.Database;
+
 public class Log {
 	private static String log = "";
 	private static int logCall = 0;

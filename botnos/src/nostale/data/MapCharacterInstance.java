@@ -2,9 +2,7 @@ package nostale.data;
 
 import nostale.util.Pos;
 
-public class MapCharacterInstance{
+public class MapCharacterInstance extends Character{
     public Pos pos;
     public long id;
-    public String name;
-    public byte authority;
 }

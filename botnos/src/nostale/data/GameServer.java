@@ -13,5 +13,6 @@ public class GameServer {
 		this.server = server;
 		this.channel = channel;
 		this.usage = usage;
-	}	
+	}
+
 }

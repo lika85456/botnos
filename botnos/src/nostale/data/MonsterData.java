@@ -2,6 +2,7 @@ package nostale.data;
 
 public class MonsterData {
 	public String NameID;
+
 	public short AmountRequired;
 
 	public short AttackClass;
