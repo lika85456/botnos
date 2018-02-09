@@ -1,4 +1,4 @@
-package nostale.nostale.data;
+package nostale.data;
 
 import nostale.data.Server;
 

@@ -1,4 +1,4 @@
-package nostale.nostale.data;
+package nostale.data;
 
 public class GameServer {
 	public String ip = "";

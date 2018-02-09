@@ -1,8 +1,8 @@
-package nostale.nostale.data;
+package nostale.data;
 
 public class Server {
-	String ip;
-	int port;
+	public String ip;
+	public int port;
 	public Server(String ip,int port)
 	{
 		this.ip = ip;

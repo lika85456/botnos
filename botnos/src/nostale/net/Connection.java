@@ -30,17 +30,23 @@ public class Connection {
 	 * @param int port - port of the server
 	 * 
 	 */
-	public void Connect(String ip, int port) throws Exception {
+	public void Connect(String ip, int port) {
 
-		clientSocket = new Socket(ip, port);
-		// if(!clientSocket.getInetAddress().isReachable(500))
-		// {
-		// throw new java.net.ConnectException();
-		// }
-		outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		try {
+			clientSocket = new Socket(ip, port);
+			// if(!clientSocket.getInetAddress().isReachable(500))
+			// {
+			// throw new java.net.ConnectException();
+			// }
+			outToServer = new DataOutputStream(clientSocket.getOutputStream());
+			inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-		this.in = new DataInputStream(clientSocket.getInputStream());
+			this.in = new DataInputStream(clientSocket.getInputStream());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 
 	}
 
