@@ -8,8 +8,8 @@ import nostale.resources.FileLoader;
 
 public class Config {
 	//md5(nostalex.dat)+md5(nostale.dat)
-	public static String HASH = "639A66B66F59C9865459AD7BD7FE748E6E25A9C17BF35FD8F7752FF9C19D0823";
-	public static String version = "0.9.3.3081";
+	public static String HASH = "F2877F880E2B94F260D6FD27B08688FF3955B30822A19DD3FA564472DD64208B";
+	public static String version = "0.9.3.3082";
 	
 	public static void load()
 	{

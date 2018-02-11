@@ -19,15 +19,16 @@ public class WalkHandler extends Handler{
 	}
 	private void Walk(Pos[] path,int index)
     {
-    	if(index>=path.length-1)
+    	if(index==path.length-1)
     	{
     		player.IsMoving = false;
+    		Walk(path[path.length-1]);
     		return;
     	}
 
         	player.IsMoving = true;
         	player.sendPacket(new Packet("walk "+path[index].x+" "+path[index].y+" 0 "+player.Speed));
-        	index++;
+        	index+=3;
         	final int i = index;
         	int timeToWait = (1/player.Speed*1000);
         	new java.util.Timer().schedule( 

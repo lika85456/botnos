@@ -1,5 +1,8 @@
+import java.util.Map;
+
 import nostale.data.AccountData;
 import nostale.data.InventoryItemInstance;
+import nostale.data.MapCharacterInstance;
 import nostale.domain.ItemType;
 import nostale.gameobject.Player;
 import nostale.handler.BattleHandler;
@@ -27,31 +30,19 @@ public class Bot {
 		        new java.util.TimerTask() {
 		            @Override
 		            public void run() {
-		            	inventoryHandler.printInventory();
-		            	int hp = bot.HP;
-		            	while(bot.HP==hp)
-		            	{
-		            		battleHandler.target = Pos.GetNearestMob(bot);
-		            		System.out.println("Target fount - "+Resources.getMob(battleHandler.target.VNum).Name+" range: "+Pos.getRange(bot.pos, battleHandler.target.Pos));
-		            		if(Pos.getRange(bot.pos, battleHandler.target.Pos)>battleHandler.skills.get(battleHandler.skills.values().toArray()[0]).Range)
-							{
-		            			walkHandler.Walk(Pos.getShortestPosInRange(1, battleHandler.target.Pos, bot.pos));
-		            			System.out.println("Walking...");
-		            			while(bot.IsMoving==true)
-		            			{
-		            				try {
-										Thread.sleep(100);
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-		            			}
-							}
-		            		battleHandler.useSkill(battleHandler.skills.get(battleHandler.skills.values().toArray()[0]));
+		            	MapCharacterInstance helca = null;
+		            	
+		            	for(Map.Entry<Integer, MapCharacterInstance> entry : bot.map.Players.entrySet()) {
+		            	    Integer key = entry.getKey();
+		            	    MapCharacterInstance value = entry.getValue();
+		            	    
+		            	    if(value.Name.equals("Helèa258"))
+		            	    {
+		            	    	helca = value;
+		            	    	break;
+		            	    }
 		            	}
-		                InventoryItemInstance[] food = inventoryHandler.getItemsByType(ItemType.Snack);
-		                inventoryHandler.useItem(food[1]);
-		                System.out.println("Ate "+Resources.getItem((int)food[1].ItemVNum).Name);
+		            	walkHandler.Walk(helca.pos);
 		            }
 		        }, 
 		        5000 

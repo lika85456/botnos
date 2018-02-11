@@ -19,6 +19,7 @@ public class PacketEventListener extends EventListener{
 		for(int i =0;i<player.packetEvents.size();i++)
 		{
 		    PacketEvent pEvent = player.packetEvents.get(i);
+		    if(pEvent==null) continue;
 			if(pEvent.getType()==PacketType.RECEIVE)
 			{
 				packetCall(pEvent.packet);

@@ -20,6 +20,7 @@ import nostale.packet.receive.CondPacket;
 import nostale.packet.receive.InPacket;
 import nostale.packet.receive.LevPacket;
 import nostale.packet.receive.MvPacket;
+import nostale.packet.receive.StatPacket;
 import nostale.resources.Resources;
 import nostale.util.Pos;
 
@@ -80,14 +81,14 @@ public class PlayerDataPacketEventListener extends PacketEventListener{
 		case "stat":
 			// stat {Hp} {HPLoad()} {Mp} {MPLoad()} 0 {option}
 			//TODO to statPacket
+			StatPacket statPacket = new StatPacket(packet.packetString);
 			int tempHP = player.HP;
-			player.HP = packet.getIntParameter(1);
-			if(tempHP!=player.HP)
-				player.log("Player Info", "Player HP: "+player.HP+"/"+player.MaxHP);
+			player.HP = statPacket.hp;
 			player.MaxHP = packet.getIntParameter(2);
 			player.MP = packet.getIntParameter(3);
 			player.MaxMP = packet.getIntParameter(4);
-			
+			if(tempHP!=player.HP)
+				player.log("Player Info", "Player HP: "+player.HP+"/"+player.MaxHP);
 			break;
 
 
