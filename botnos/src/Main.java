@@ -13,7 +13,7 @@ public class Main {
 		//botData.nickname = "Zadek5212";
 		botData.nickname = "Zadek512";
 		botData.password = "Computer1";
-		botData.Channel = 2;
+		botData.Channel = 3;
 		botData.Server = 1;
 		botData.Character = 1;
 		botData.Nation = CServer.CZ;

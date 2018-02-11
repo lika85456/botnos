@@ -11,11 +11,12 @@ public class SkiPacket extends Packet{
 	public SkiPacket(String str) {
 		super(str);
 		base = Integer.parseInt(parameters[1]);
-		this.generatedSkills = new SkillData[parameters.length-2];
-		for(int i = 2;i<parameters.length;i++)
+		this.generatedSkills = new SkillData[parameters.length-3];
+		for(int i = 3;i<parameters.length;i++)
 		{
-			this.generatedSkills[i-2] = Resources.getSkill(Integer.parseInt(parameters[i]));
+			this.generatedSkills[i-3] = Resources.getSkill(Integer.parseInt(parameters[i]));
 		}
+
 	}
 	
 }

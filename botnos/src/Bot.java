@@ -3,6 +3,8 @@ import java.util.Map;
 import nostale.data.AccountData;
 import nostale.data.InventoryItemInstance;
 import nostale.data.MapCharacterInstance;
+import nostale.data.MonsterMapInstance;
+import nostale.data.SkillData;
 import nostale.domain.ItemType;
 import nostale.gameobject.Player;
 import nostale.handler.BattleHandler;
@@ -26,24 +28,27 @@ public class Bot {
 		SpecialistHandler specialistHandler = new SpecialistHandler(bot);
 		BattleHandler battleHandler = new BattleHandler(bot);
 		WalkHandler walkHandler = new WalkHandler(bot);
-		new java.util.Timer().schedule( 
+		new java.util.Timer("BotTimer").schedule( 
 		        new java.util.TimerTask() {
 		            @Override
 		            public void run() {
-		            	MapCharacterInstance helca = null;
-		            	
-		            	for(Map.Entry<Integer, MapCharacterInstance> entry : bot.map.Players.entrySet()) {
-		            	    Integer key = entry.getKey();
-		            	    MapCharacterInstance value = entry.getValue();
-		            	    
-		            	    if(value.Name.equals("Helèa258"))
-		            	    {
-		            	    	helca = value;
-		            	    	break;
-		            	    }
+		            	while(true)
+		            	{
+		            		try{
+				            	if(battleHandler.target==null)
+					            	battleHandler.target = Pos.GetNearestMob(bot);
+				            	SkillData skillToBeUsed = battleHandler.baseSkill;
+				            	if(Pos.getRange(bot.pos, battleHandler.target.Pos)<skillToBeUsed.Range+1)
+				            		walkHandler.Walk(Pos.getShortestPosInRange(skillToBeUsed.Range+1, battleHandler.target.Pos, bot.pos));
+				            	else
+				            		battleHandler.useSkill(skillToBeUsed);
+		            		}
+		            		catch(Exception e)
+		            		{
+		            			e.printStackTrace();
+		            		}
 		            	}
-		            	walkHandler.Walk(helca.pos);
-		            	//
+
 		            }
 		        }, 
 		        5000 

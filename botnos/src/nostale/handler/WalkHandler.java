@@ -19,10 +19,10 @@ public class WalkHandler extends Handler{
 	}
 	private void Walk(Pos[] path,int index)
     {
-    	if(index==path.length-1)
+    	if(index>=path.length-1)
     	{
     		player.IsMoving = false;
-    		Walk(path[path.length-1]);
+    		player.sendPacket(new Packet("walk "+path[path.length-1].x+" "+path[path.length-1].y+" 1 "+player.Speed));
     		return;
     	}
 
@@ -30,8 +30,8 @@ public class WalkHandler extends Handler{
         	player.sendPacket(new Packet("walk "+path[index].x+" "+path[index].y+" 0 "+player.Speed));
         	index+=3;
         	final int i = index;
-        	int timeToWait = (1/player.Speed*1000);
-        	new java.util.Timer().schedule( 
+        	int timeToWait = 3*(player.Speed/1000);
+        	new java.util.Timer("WalkTimer").schedule( 
         	        new java.util.TimerTask() {
         	            @Override
         	            public void run() {

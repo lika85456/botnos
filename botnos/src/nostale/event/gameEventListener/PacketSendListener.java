@@ -17,12 +17,15 @@ public class PacketSendListener extends GameEventListener{
 	@Override
 	public void call()
 	{
-		for(PacketEvent pEvent:player.packetEvents)
+		for(int i =0;i<player.packetEvents.size();i++)
 		{
+			PacketEvent pEvent=player.packetEvents.get(i);
+			if(pEvent==null) continue;
 			if(pEvent.getType()==PacketType.SEND)
 			{
 				player.log("Packet send", pEvent.packet.packetString);
-				connectionHandler.connection.send(Crypto.EncryptGamePacket(pEvent.packet.packetString, player.session, false));
+				connectionHandler.connection.send(Crypto.EncryptGamePacket(connectionHandler.packetId+" "+pEvent.packet.packetString, player.session, false));
+				connectionHandler.packetId++;
 			}
 		}
 	}

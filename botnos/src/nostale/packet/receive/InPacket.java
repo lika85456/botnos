@@ -6,22 +6,42 @@ import nostale.util.Pos;
 
 //Probably some gameobject enters into the map (not exactly enters, he is just there)
 public class InPacket extends Packet{
-	/*in 1 {(Authority == AuthorityType.Moderator ? 
-	 * $"[{Language.Instance.GetMessageFromKey("SUPPORT")}]" + name : name)}
+	/*in
+	 *  1 
+	 *  {(Authority == AuthorityType.Moderator ? $"[{Language.Instance.GetMessageFromKey("SUPPORT")}]" + name : name)}
 	 *  - 
-	 *  {CharacterId} 
-	 *  {PositionX} {PositionY} {Direction}
-	 *   {(Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : (byte)Authority)} 
-	 *   {(byte)Gender} {(byte)HairStyle} {color} {(byte)Class} {GenerateEqListForPacket()} 
-	 *   {Math.Ceiling(Hp / HPLoad() * 100)} {Math.Ceiling(Mp / MPLoad() * 100)} 
-	 *   {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (long)Group?.GroupId : -1)} 
-	 *   {(fairy != null ? 4 : 0)} {fairy?.Item.Element ?? 0} 0 {fairy?.Item.Morph ?? 0} 0 
-	 *   {(UseSp || IsVehicled ? Morph : 0)} {GenerateEqRareUpgradeForPacket()} 
-	 *   {(foe ? -1 : Family?.FamilyId ?? -1)} {(foe ? name : Family?.Name ?? "-")} 
-	 *   {(GetDignityIco() == 1 ? GetReputIco() : -GetDignityIco())} {(Invisible ? 1 : 0)} 
-	 *   {(UseSp ? MorphUpgrade : 0)} {faction} {(UseSp ? MorphUpgrade2 : 0)} {Level} 
-	 *   {Family?.FamilyLevel ?? 0} {ArenaWinner} {(Authority == AuthorityType.Moderator ? 500 : Compliment)} 
-	 *   {Size} {HeroLevel}";
+	 * {CharacterId} 
+	 *  {PositionX} 
+	 *  {PositionY} 
+	 *  {Direction}
+	 *  {(Undercover ? (byte)AuthorityType.User : Authority < AuthorityType.User ? (byte)AuthorityType.User : (byte)Authority)} 
+	 *  {(byte)Gender}
+	 *  {(byte)HairStyle} 
+	 *  {color} {(byte)Class} 
+	 *  {GenerateEqListForPacket()} 
+	 *  {Math.Ceiling(Hp / HPLoad() * 100)} 
+	 *  {Math.Ceiling(Mp / MPLoad() * 100)} 
+	 *  {(IsSitting ? 1 : 0)} {(Group?.GroupType == GroupType.Group ? (long)Group?.GroupId : -1)} 
+	 *  {(fairy != null ? 4 : 0)} 
+	 *  {fairy?.Item.Element ?? 0} 
+	 *  0 
+	 *  {fairy?.Item.Morph ?? 0} 
+	 *  0 
+	 *  {(UseSp || IsVehicled ? Morph : 0)} 
+	 *  {GenerateEqRareUpgradeForPacket()} 
+	 *  {(foe ? -1 : Family?.FamilyId ?? -1)} 
+	 *  {(foe ? name : Family?.Name ?? "-")} 
+	 *  {(GetDignityIco() == 1 ? GetReputIco() : -GetDignityIco())} 
+	 *  {(Invisible ? 1 : 0)} 
+	 *  {(UseSp ? MorphUpgrade : 0)} 
+	 *  {faction} 
+	 *  {(UseSp ? MorphUpgrade2 : 0)} 
+	 *  {Level} 
+	 *  {Family?.FamilyLevel ?? 0} 
+	 *  {ArenaWinner} 
+	 *  {(Authority == AuthorityType.Moderator ? 500 : Compliment)} 
+	 *  {Size} 
+	 *  {HeroLevel}";
 	 */
 	
 	
@@ -49,7 +69,10 @@ public class InPacket extends Packet{
 	//TODO make more info from the packet
 	public InPacket(String str) {
 		super(str);
-		userType = parameters[1].equals("1") ? UserType.Player : UserType.Monster; //TODO rly
+		userType = null;
+		if(parameters[1].equals("1")) userType = UserType.Player;
+		if(parameters[1].equals("3")) userType = UserType.Monster;
+
 		if(userType==UserType.Monster)
 		{
 			userId = Integer.parseInt(parameters[3]);
@@ -65,8 +88,8 @@ public class InPacket extends Packet{
 			direction = Byte.parseByte(parameters[7]);
 			authority = Byte.parseByte(parameters[8]);
 			isSitting = "1".equals(parameters[16]);
-			isInvisible = "1".equals(parameters[28]);
-			level = Byte.parseByte(parameters[32]);
+			isInvisible = "1".equals(parameters[26]);
+			level = Byte.parseByte(parameters[30]);
 			userId = Integer.parseInt(parameters[4]);
 		}
 	}

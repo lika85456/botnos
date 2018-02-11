@@ -65,8 +65,9 @@ public class Pos {
 		if (r < range) {
 			return character;
 		}
-		return new Pos(character.x + ((mob.x - character.x) * (r - range) / r),
+		Pos toRet = new Pos(character.x + ((mob.x - character.x) * (r - range) / r),
 				character.y + ((mob.y - character.y) * (r - range) / r));
+		return toRet;
 	}
 
 	public static Pos[] getPath(nostale.resources.Map m, Pos p1, Pos p2) {
@@ -76,7 +77,14 @@ public class Pos {
 				map.setWalkable(x, y, m.canWalkHere(x, y));
 			}
 		}
-		List<ExampleNode> list = map.findPath(p1.x, p1.y, p2.x, p2.y);
+		List<ExampleNode> list;
+		try{
+			list = map.findPath(p1.x, p1.y, p2.x, p2.y);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		// map.drawMap();
 		Pos[] toReturn = new Pos[list.size()];
 		for (int i = 0; i < list.size(); i++) {

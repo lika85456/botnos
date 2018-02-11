@@ -157,7 +157,7 @@ public class LoginHandler extends Handler{
 			packetId+=2;
 			parseChars();
 
-			t = new Timer();
+			t = new Timer("PulseTimer");
 			tt = new TimerTask() {
 				@Override
 				public void run() {

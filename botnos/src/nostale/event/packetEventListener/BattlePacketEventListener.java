@@ -32,6 +32,7 @@ public class BattlePacketEventListener extends PacketEventListener{
 			for (SkillData s : temp.generatedSkills) {
 				battleHandler.skills.put(s.SkillVNum, s);
 			}
+			battleHandler.baseSkill = Resources.getSkill(temp.base);
 			break;
 		case "sr":
 			battleHandler.lastSkillRequest = null; // Skill succesfully reseted
@@ -64,7 +65,6 @@ public class BattlePacketEventListener extends PacketEventListener{
 
 			if (tempSuPacket.attackerId == player.id) {
 				// me attacking target
-				battleHandler.skills.get(tempSuPacket.skillVNum).IsOnCooldown = true;
 				player.addGameEvent(new SkillHitGameEvent(Resources.getSkill((int)tempSuPacket.skillVNum),tempSuPacket.damage));
 			}
 			break;
