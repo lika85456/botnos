@@ -10,26 +10,26 @@ import nostale.net.Crypto;
 import nostale.packet.GamePacket;
 import nostale.packet.PacketType;
 
-public class PacketReceiveListener extends GameEventListener{
+public class PacketReceiveListener extends GameEventListener {
 	public ConnectionHandler connectionHandler;
-	public PacketReceiveListener(Player p,ConnectionHandler c) {
+
+	public PacketReceiveListener(Player p, ConnectionHandler c) {
 		super(p);
 		this.connectionHandler = c;
 	}
 
 	@Override
-	public void call()
-	{
+	public void call() {
 		ArrayList<String> received = Crypto.DecryptGamePacket(connectionHandler.connection.getReceived());
-		//long time = System.currentTimeMillis();
-		for(String packet:received)
-		{
-			if(!(packet.contains("mv")) && !(packet.contains("stat")) && !(packet.contains("in")))
-			player.log("Packet received", packet);
+		// long time = System.currentTimeMillis();
+		for (String packet : received) {
+			// if(!(packet.contains("mv")) && !(packet.contains("stat")) &&
+			// !(packet.contains("in")))
+			// player.log("Packet received", packet);
 			GamePacket tPacket = new GamePacket(packet);
 			tPacket.packetType = PacketType.RECEIVE;
 			PacketEvent pEvent = new PacketEvent(tPacket);
-			//pEvent.time = time;
+			// pEvent.time = time;
 			player.addPacketEvent(pEvent);
 		}
 	}

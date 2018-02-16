@@ -4,7 +4,7 @@ import nostale.domain.UserType;
 import nostale.packet.Packet;
 
 // Skill used packet. received when someone/something attacks somebody/something
-public class SuPacket extends Packet{
+public class SuPacket extends Packet {
 	public UserType attackerType;
 	public int attackerId;
 	public UserType attackedType;
@@ -20,8 +20,9 @@ public class SuPacket extends Packet{
 	public int damage;
 	public short hitmode;
 	public short skillType;
-	// su {attackerType - usertype} {hitRequest.Session.Character.CharacterId} 
-	//{attackedType - usertype} {MapMonsterId}
+
+	// su {attackerType - usertype} {hitRequest.Session.Character.CharacterId}
+	// {attackedType - usertype} {MapMonsterId}
 	// {hitRequest.Skill.SkillVNum} {hitRequest.Skill.Cooldown}
 	// {hitRequest.Skill.AttackAnimation} {hitRequest.SkillEffect}
 	// {hitRequest.Session.Character.PositionX}
@@ -30,21 +31,20 @@ public class SuPacket extends Packet{
 	// {hitmode} {hitRequest.Skill.SkillType - 1}
 	public SuPacket(String str) {
 		super(str);
-		try
-		{
-			if(parameters[1].equals("1"))
-			attackerType = UserType.Player;
-			if(parameters[1].equals("2"))
-			attackerType = UserType.Npc;
-			if(parameters[1].equals("3"))
-			attackerType = UserType.Monster;
+		try {
+			if (parameters[1].equals("1"))
+				attackerType = UserType.Player;
+			if (parameters[1].equals("2"))
+				attackerType = UserType.Npc;
+			if (parameters[1].equals("3"))
+				attackerType = UserType.Monster;
 			attackerId = Integer.parseInt(parameters[2]);
-			if(parameters[3].equals("1"))
-			attackedType = UserType.Player;
-			if(parameters[3].equals("2"))
-			attackedType = UserType.Npc;
-			if(parameters[3].equals("3"))
-			attackedType = UserType.Monster;
+			if (parameters[3].equals("1"))
+				attackedType = UserType.Player;
+			if (parameters[3].equals("2"))
+				attackedType = UserType.Npc;
+			if (parameters[3].equals("3"))
+				attackedType = UserType.Monster;
 			attackedId = Integer.parseInt(parameters[4]);
 			skillVNum = Short.parseShort(parameters[5]);
 			skillCooldown = Short.parseShort(parameters[6]);
@@ -57,9 +57,7 @@ public class SuPacket extends Packet{
 			damage = Integer.parseInt(parameters[13]);
 			hitmode = Short.parseShort(parameters[14]);
 			skillType = Short.parseShort(parameters[15]);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

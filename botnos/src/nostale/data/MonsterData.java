@@ -87,6 +87,6 @@ public class MonsterData {
 	public short WaterResistance;
 
 	public int XP;
-	
+
 	public int[] Drop;
 }

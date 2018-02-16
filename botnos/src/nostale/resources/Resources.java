@@ -22,22 +22,16 @@ public class Resources {
 	public static HashMap<Integer, SkillData> skills;
 	public static HashMap<Integer, ItemData> items;
 	public static HashMap<Integer, MonsterData> mobs;
-	//public static HashMap<Integer, DropData> drops;
+	// public static HashMap<Integer, DropData> drops;
 	private static Boolean loaded = false;
-	
-	/*public static Item[] getDrop(NpcMonster monster)
-	{
-		Item[] toRet = new Item[monster.Drop.length];
-		for(int i = 0;i<monster.Drop.length;i++)
-		{
-			toRet[i] = Resources.getItem(monster.Drop[i]);
-		}
-		return toRet;
-	}
-	
-	*/
 
-	
+	/*
+	 * public static Item[] getDrop(NpcMonster monster) { Item[] toRet = new
+	 * Item[monster.Drop.length]; for(int i = 0;i<monster.Drop.length;i++) {
+	 * toRet[i] = Resources.getItem(monster.Drop[i]); } return toRet; }
+	 * 
+	 */
+
 	public static SkillData getSkill(Integer id) {
 		return skills.get(id);
 	}
@@ -66,11 +60,12 @@ public class Resources {
 	}
 
 	// TODO rewrite reading from files to FileLoader
-	//TODO add drop loading
-	/*public static HashMap<Integer,DropData> loadDrops(){
-		
-	}
-	*/
+	// TODO add drop loading
+	/*
+	 * public static HashMap<Integer,DropData> loadDrops(){
+	 * 
+	 * }
+	 */
 
 	public static HashMap<Integer, SkillData> loadSkills() {
 		HashMap<Integer, SkillData> skills = new HashMap<Integer, SkillData>();
@@ -345,21 +340,19 @@ public class Resources {
 						npc.AttackUpgrade = Short.parseShort(unknownData == 1 ? currentLine[2] : currentLine[4]);
 					} else if (currentLine.length > 3 && currentLine[1].equals("AINFO")) {
 						npc.DefenceUpgrade = Short.parseShort(unknownData == 1 ? currentLine[2] : currentLine[3]);
-					} /*else if (currentLine[1].equals("ITEM")) {
-
-						int pos = line.indexOf("1	-1	0	0	-1");
-						if (pos > 0) {
-
-							String tempLine[] = line.substring(0, pos).split("\\s+");
-							if (tempLine.length > 2) {
-
-								npc.Drop = new int[tempLine.length - 2];
-								for (int iii = 2; iii < tempLine.length; iii++) {
-									npc.Drop[iii - 2] = Integer.parseInt(currentLine[iii]);
-								}
-							}
-						}
-					}*/
+					} /*
+						 * else if (currentLine[1].equals("ITEM")) {
+						 * 
+						 * int pos = line.indexOf("1	-1	0	0	-1"); if
+						 * (pos > 0) {
+						 * 
+						 * String tempLine[] = line.substring(0,
+						 * pos).split("\\s+"); if (tempLine.length > 2) {
+						 * 
+						 * npc.Drop = new int[tempLine.length - 2]; for (int iii
+						 * = 2; iii < tempLine.length; iii++) { npc.Drop[iii -
+						 * 2] = Integer.parseInt(currentLine[iii]); } } } }
+						 */
 
 				}
 
@@ -453,14 +446,16 @@ public class Resources {
 					item.Type = InventoryType.values()[Short.parseShort(currentLine[2])];
 					break;
 				}
-				
-				item.ItemType = !currentLine[3].equals("-1") ? (ItemType)ItemType.fromInteger(Integer.parseInt(item.Type.getValue()+currentLine[3])) : ItemType.Weapon;
-				if(item.ItemType==null)
-				{
-					item.ItemType=ItemType.Weapon;
+
+				item.ItemType = !currentLine[3].equals("-1")
+						? (ItemType) ItemType.fromInteger(Integer.parseInt(item.Type.getValue() + currentLine[3]))
+						: ItemType.Weapon;
+				if (item.ItemType == null) {
+					item.ItemType = ItemType.Weapon;
 				}
-				//System.out.print(currentLine[3]);
-				//item.ItemType = !currentLine[3].equals("-1") ? ItemType.values()[Integer.parseInt(currentLine[3])]
+				// System.out.print(currentLine[3]);
+				// item.ItemType = !currentLine[3].equals("-1") ?
+				// ItemType.values()[Integer.parseInt(currentLine[3])]
 				item.ItemSubType = Byte.parseByte(currentLine[4]);
 				item.EquipmentSlot = !currentLine[5].equals("-1")
 						? EquipmentType.values()[Short.parseShort(currentLine[5])] : EquipmentType.values()[0];
@@ -851,8 +846,7 @@ public class Resources {
 				item.Flag8 = currentLine[24].equals("1");
 
 			} else if (currentLine.length > 1 && currentLine[1].equals("DATA")) {
-				if(item.ItemType==null)
-				{
+				if (item.ItemType == null) {
 					System.out.println("");
 				}
 				switch (item.ItemType) {
@@ -1229,12 +1223,13 @@ public class Resources {
 						break;
 
 					case 1981:
-						item.Effect = 34; // imagined number as for I = √(-1),
+						item.Effect = 34; // imagined number as for I = â�š(-1),
 											// complex z = a + bi
 						break;
 
 					case 1982:
-						item.Effect = 6969; // imagined number as for I = √(-1),
+						item.Effect = 6969; // imagined number as for I =
+											// â�š(-1),
 											// complex z = a + bi
 						break;
 
@@ -1268,7 +1263,7 @@ public class Resources {
 					default:
 						if (item.VNum > 5891 && item.VNum < 5900 || item.VNum > 9100 && item.VNum < 9109) {
 							item.Effect = 69; // imagined number as for I =
-												// √(-1), complex z = a + bi
+												// â�š(-1), complex z = a + bi
 						} else {
 							item.Effect = (short) Integer.parseInt(currentLine[2]);
 						}
@@ -1494,7 +1489,7 @@ public class Resources {
 							name += currentLine[ii] + " ";
 						}
 
-						//items.put(k, v);
+						// items.put(k, v);
 						v.Name = name;
 					}
 

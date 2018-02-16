@@ -3,17 +3,16 @@ package nostale.handler;
 import nostale.gameobject.Player;
 import nostale.packet.Packet;
 
-public class SpecialistHandler extends Handler{
+public class SpecialistHandler extends Handler {
 	private Boolean isOn = false;
 	private Long lastTime = (long) 0;
-	public SpecialistHandler(Player p)
-	{
+
+	public SpecialistHandler(Player p) {
 		super(p);
 	}
-	public Boolean putOn()
-	{
-		if(System.currentTimeMillis()<lastTime+30000)
-		{
+
+	public Boolean putOn() {
+		if (System.currentTimeMillis() < lastTime + 30000) {
 			return false;
 		}
 		player.sendPacket(new Packet("sl 0"));
@@ -24,17 +23,17 @@ public class SpecialistHandler extends Handler{
 			e.printStackTrace();
 		}
 		player.sendPacket(new Packet("#sl^1"));
-		isOn=true;
+		isOn = true;
 		return true;
 	}
-	public void putOff()
-	{
+
+	public void putOff() {
 		player.sendPacket(new Packet("sl 0"));
-		isOn=false;
-		
+		isOn = false;
+
 	}
-	public Boolean isOn()
-	{
+
+	public Boolean isOn() {
 		return isOn;
 	}
 

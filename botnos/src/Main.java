@@ -6,11 +6,10 @@ public class Main {
 	public static Boolean run = false;
 	public static Bot bot;
 
-
-	public static void main(String args[]) {	
+	public static void main(String args[]) {
 		AccountData botData = new AccountData();
 		// nostaleJackpot@post.cz Computer1
-		//botData.nickname = "Zadek5212";
+		// botData.nickname = "Zadek5212";
 		botData.nickname = "Zadek512";
 		botData.password = "Computer1";
 		botData.Channel = 3;
@@ -20,8 +19,7 @@ public class Main {
 		Resources.load();
 		bot = new Bot(botData);
 		bot.run();
-		while(true)
-		{
+		while (true) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -30,6 +28,5 @@ public class Main {
 			}
 		}
 	}
-	
 
 }

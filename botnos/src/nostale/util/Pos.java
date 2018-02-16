@@ -71,18 +71,18 @@ public class Pos {
 	}
 
 	public static Pos[] getPath(nostale.resources.Map m, Pos p1, Pos p2) {
+		if (p1.x == p2.x && p1.y == p2.y)
+			return new Pos[] { p1 };
 		nostale.util.Map<ExampleNode> map = new nostale.util.Map<ExampleNode>(m.width, m.height, new ExampleFactory());
 		for (int x = 0; x < m.width; x++) {
 			for (int y = 0; y < m.height; y++) {
 				map.setWalkable(x, y, m.canWalkHere(x, y));
 			}
 		}
-		List<ExampleNode> list;
-		try{
+		List<ExampleNode> list = null;
+		try {
 			list = map.findPath(p1.x, p1.y, p2.x, p2.y);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// map.drawMap();
@@ -93,23 +93,22 @@ public class Pos {
 		return toReturn;
 	}
 
-    public static MonsterMapInstance GetNearestMob(Player p)
-    {
-    	int range = 100000;
-    	MonsterMapInstance m = null;
-        for(Entry<Integer, MonsterMapInstance> entry : p.map.Mobs.entrySet()) {
-        	//Integer key = entry.getKey();
-        	MonsterMapInstance mob = entry.getValue();
-        	if(Pos.getRange(mob.Pos, p.pos)<range)
-        	{
-        		m = mob;
-        		range = Pos.getRange(mob.Pos, p.pos);
-        	}
-        }
-        return m;
-}
-	
-	
+	public static MonsterMapInstance GetNearestMob(Player p) {
+		int range = 100000;
+		MonsterMapInstance m = null;
+		for (Entry<Integer, MonsterMapInstance> entry : p.map.Mobs.entrySet()) {
+			// Integer key = entry.getKey();
+			MonsterMapInstance mob = entry.getValue();
+			if (mob == null || mob.Pos==null)
+				continue;
+			if (Pos.getRange(mob.Pos, p.pos) < range) {
+				m = mob;
+				range = Pos.getRange(mob.Pos, p.pos);
+			}
+		}
+		return m;
+	}
+
 	@Override
 	public String toString() {
 		return this.x + "|" + this.y;

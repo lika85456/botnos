@@ -19,31 +19,30 @@ import nostale.net.Crypto;
 import nostale.packet.Packet;
 import nostale.data.Character;
 
-public class LoginHandler extends Handler{
-	//TODO CLEANUP
+public class LoginHandler extends Handler {
+	// TODO CLEANUP
 	public AccountData accData;
-	//md5(nostalex.dat)+md5(nostale.dat)
+	// md5(nostalex.dat)+md5(nostale.dat)
 	private String HASH = Config.HASH;
 	private String version = Config.version;
 	public Connection c;
 	private Server s;
 	private GameServer[] channels;
-	private HashMap<Integer,Character> characters;
+	private HashMap<Integer, Character> characters;
 	public Timer t;
 	public TimerTask tt;
 	private int time = 0;
 	public int session;
-	public int packetId=254;
+	public int packetId = 254;
 	public Boolean succefullyLoggedIn = false;
 
-	public int getPacketId()
-	{
+	public int getPacketId() {
 		return packetId;
 	}
-	
+
 	public LoginHandler(Player p) {
 		super(p);
-		this.characters = new HashMap<Integer,Character>();
+		this.characters = new HashMap<Integer, Character>();
 		accData = p.accData;
 
 		s = new Server(accData.Nation);
@@ -73,7 +72,7 @@ public class LoginHandler extends Handler{
 					selectChar(characters.get(accData.Character));
 					succefullyLoggedIn = true;
 					player.log("login", "Login status: CONNECTED");
-	     			p.session = session;
+					p.session = session;
 
 				}
 			}
@@ -125,7 +124,7 @@ public class LoginHandler extends Handler{
 
 			if (!packet.contains("TeST")) {
 				System.out.println(packet);
-				Packet p  =new Packet(packet);
+				Packet p = new Packet(packet);
 				onError(p.getIntParameter(1));
 				return;
 			}
@@ -149,12 +148,12 @@ public class LoginHandler extends Handler{
 
 			c.Connect(s.ip, s.port);
 			packetId++;
-			c.send(Crypto.EncryptGamePacket(packetId +" "+Integer.toString(this.session), this.session, true));
+			c.send(Crypto.EncryptGamePacket(packetId + " " + Integer.toString(this.session), this.session, true));
 			Thread.sleep(200);
 			packetId++;
-			c.send(Crypto.EncryptGamePacket(packetId +" "+ accData.nickname, this.session, false)
-					+ Crypto.EncryptGamePacket((packetId + 1 )+" "+ accData.password, this.session, false));
-			packetId+=2;
+			c.send(Crypto.EncryptGamePacket(packetId + " " + accData.nickname, this.session, false)
+					+ Crypto.EncryptGamePacket((packetId + 1) + " " + accData.password, this.session, false));
+			packetId += 2;
 			parseChars();
 
 			t = new Timer("PulseTimer");
@@ -163,7 +162,7 @@ public class LoginHandler extends Handler{
 				public void run() {
 					time += 60;
 					try {
-						send("pulse " + time + " 0");
+						player.sendPacket("pulse " + time + " 0");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -189,7 +188,7 @@ public class LoginHandler extends Handler{
 				// System.out.println(":"+parsePacket(rec)[0]+":");
 				if (parsePacket(rec)[0].equals("clist")) {
 					Character tmp = parseChar(rec);
-					characters.put((int)tmp.Slot,parseChar(rec));
+					characters.put((int) tmp.Slot, parseChar(rec));
 				}
 			}
 		}
@@ -199,7 +198,7 @@ public class LoginHandler extends Handler{
 	}
 
 	public void send(String s) throws Exception {
-		c.send(Crypto.EncryptGamePacket(packetId +" "+ s, this.session, false));
+		c.send(Crypto.EncryptGamePacket(packetId + " " + s, this.session, false));
 		packetId++;
 	}
 
@@ -221,47 +220,43 @@ public class LoginHandler extends Handler{
 
 	public void onError(int error) {
 		/*
-		 * 	public static final byte OldClient = 1;
-	public static final byte UnhandledError = 2;
-	public static final byte Maintenance = 3;
-	public static final byte AlreadyConnected = 4;
-	public static final byte AccountOrPasswordWrong = 5;
-	public static final byte CantConnect = 6;
-	public static final byte Banned = 7;
-	public static final byte WrongCountry = 8;
-	public static final byte WrongCaps = 9;
+		 * public static final byte OldClient = 1; public static final byte
+		 * UnhandledError = 2; public static final byte Maintenance = 3; public
+		 * static final byte AlreadyConnected = 4; public static final byte
+		 * AccountOrPasswordWrong = 5; public static final byte CantConnect = 6;
+		 * public static final byte Banned = 7; public static final byte
+		 * WrongCountry = 8; public static final byte WrongCaps = 9;
 		 */
-			String errorS = ("Cannot login because ");
-			switch(error)
-			{
-			case LoginFailType.OldClient:
-				errorS+=("old client!");
-				break;
-			case LoginFailType.UnhandledError:
-				errorS+=("unhandled error!");
-				break;
-			case LoginFailType.Maintenance:
-				errorS+=("maintenance!");
-				break;
-			case LoginFailType.AlreadyConnected:
-				errorS+=("already connected!");
-				break;
-			case LoginFailType.AccountOrPasswordWrong:
-				errorS+=("account or password wrong!");
-				break;
-			case LoginFailType.CantConnect:
-				errorS+=("cannot connect!");
-				break;
-			case LoginFailType.Banned:
-				errorS+=("banned!");
-				break;
-			case LoginFailType.WrongCountry:
-				errorS+=("wrong country!");
-				break;
-			case LoginFailType.WrongCaps:
-				errorS+=("wrong caps!");
-				break;
-			}
-			player.log("LoginERROR", errorS);
+		String errorS = ("Cannot login because ");
+		switch (error) {
+		case LoginFailType.OldClient:
+			errorS += ("old client!");
+			break;
+		case LoginFailType.UnhandledError:
+			errorS += ("unhandled error!");
+			break;
+		case LoginFailType.Maintenance:
+			errorS += ("maintenance!");
+			break;
+		case LoginFailType.AlreadyConnected:
+			errorS += ("already connected!");
+			break;
+		case LoginFailType.AccountOrPasswordWrong:
+			errorS += ("account or password wrong!");
+			break;
+		case LoginFailType.CantConnect:
+			errorS += ("cannot connect!");
+			break;
+		case LoginFailType.Banned:
+			errorS += ("banned!");
+			break;
+		case LoginFailType.WrongCountry:
+			errorS += ("wrong country!");
+			break;
+		case LoginFailType.WrongCaps:
+			errorS += ("wrong caps!");
+			break;
+		}
+		player.log("LoginERROR", errorS);
 	}
 }

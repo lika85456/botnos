@@ -1,12 +1,10 @@
 package nostale.packet;
 
-
 public class Packet {
 	public PacketType packetType; // If its received or send
 	public String packetString; // Whole packet in string
 	public String name; // Name of packet, example - walk x x -> name = walk
 	protected String[] parameters;
-
 
 	/**
 	 * New packet from string
@@ -32,8 +30,8 @@ public class Packet {
 		}
 		return 0;
 	}
-	public int gip(int index)
-	{
+
+	public int gip(int index) {
 		return getIntParameter(index);
 	}
 

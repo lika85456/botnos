@@ -5,7 +5,6 @@ import java.util.TimerTask;
 
 import nostale.domain.RequestExchangeType;
 import nostale.gameobject.Player;
-import nostale.handler.interfaces.ITradeHandler;
 import nostale.packet.Packet;
 
 public class TradeHandler extends Handler implements ITradeHandler, IHandler {
@@ -21,12 +20,11 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 	private RequestExchangeType MyStatus = RequestExchangeType.Unknown;
 	private RequestExchangeType OponentStatus = RequestExchangeType.Unknown;
 
-	public void closeTimer()
-	{
+	public void closeTimer() {
 		timer.cancel();
 		timerTask.cancel();
 	}
-	
+
 	public TradeHandler(Player p) {
 		super(p);
 	}
@@ -36,10 +34,9 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 		player.send(new Packet("req_exc 1 " + id));
 		this.playerID = id;
 	}
-	
+
 	@Override
-	public void acceptRequest()
-	{
+	public void acceptRequest() {
 		this.isTrading = true;
 		this.MyStatus = RequestExchangeType.Requested;
 		this.OponentStatus = RequestExchangeType.Requested;
@@ -64,7 +61,8 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 
 	@Override
 	public void onRequest(Packet p) {
-		if(isTrading()) return;
+		if (isTrading())
+			return;
 		String parse = p.getParameter(1);
 		this.playerID = Long.parseLong(parse.split("\\^")[2]);
 		tradeId++;
@@ -76,7 +74,7 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 		this.MyStatus = RequestExchangeType.Requested;
 		this.OponentStatus = RequestExchangeType.Requested;
 	}
-	
+
 	private Packet generateAnswer(Boolean decision) {
 		if (decision)
 			return new Packet("#req_exc^2^" + playerID);
@@ -100,11 +98,11 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 
 	@Override
 	public void declineRequest() {
-		
-		
+
 		this.MyStatus = RequestExchangeType.Unknown;
 		this.OponentStatus = RequestExchangeType.Unknown;
-		if(!isTrading()) return;
+		if (!isTrading())
+			return;
 		this.isTrading = false;
 		player.send(generateAnswer(false));
 	}
@@ -113,7 +111,8 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 	public void declineTrade() {
 		this.MyStatus = RequestExchangeType.Unknown;
 		this.OponentStatus = RequestExchangeType.Unknown;
-		if(!isTrading()) return;
+		if (!isTrading())
+			return;
 		this.isTrading = false;
 		player.send(new Packet("req_exc 4"));
 	}
@@ -138,7 +137,7 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 		this.OponentStatus = RequestExchangeType.Unknown;
 		this.MyStatus = RequestExchangeType.Unknown;
 		this.isTrading = false;
-		
+
 	}
 
 	@Override
@@ -159,7 +158,7 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 		case "dlg":
 			onRequest(packet);
 			break;
-			
+
 		case "exc_list": // player executed their list or accepted traderequest
 			// exc_list 1 374541 -1
 
@@ -184,7 +183,5 @@ public class TradeHandler extends Handler implements ITradeHandler, IHandler {
 			break;
 		}
 	}
-
-
 
 }

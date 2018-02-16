@@ -5,14 +5,12 @@ import nostale.packet.PacketType;
 
 public class PacketEvent {
 	public Packet packet;
-	
-	public PacketEvent(Packet packet)
-	{
+
+	public PacketEvent(Packet packet) {
 		this.packet = packet;
 	}
-	
-	public PacketType getType()
-	{
+
+	public PacketType getType() {
 		return packet.packetType;
 	}
 }

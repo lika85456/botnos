@@ -15,19 +15,20 @@ import nostale.packet.receive.SkiPacket;
 import nostale.packet.receive.SuPacket;
 import nostale.resources.Resources;
 
-public class BattlePacketEventListener extends PacketEventListener{
-	
+public class BattlePacketEventListener extends PacketEventListener {
+
 	public BattleHandler battleHandler;
-	public BattlePacketEventListener(Player p,BattleHandler battleHandler) {
+
+	public BattlePacketEventListener(Player p, BattleHandler battleHandler) {
 		super(p);
 		this.battleHandler = battleHandler;
 	}
-	
-	public void packetCall(Packet p)
-	{
+
+	@Override
+	public void packetCall(Packet p) {
 		switch (p.name) {
 		case "ski":
-			battleHandler.skills = new HashMap<Short,SkillData>();
+			battleHandler.skills = new HashMap<Short, SkillData>();
 			SkiPacket temp = new SkiPacket(p.packetString);
 			for (SkillData s : temp.generatedSkills) {
 				battleHandler.skills.put(s.SkillVNum, s);
@@ -42,14 +43,16 @@ public class BattlePacketEventListener extends PacketEventListener{
 			break;
 		case "su":
 			SuPacket tempSuPacket = new SuPacket(p.packetString);
-			player.sendPacket(new Packet("ncif " + tempSuPacket.attackerType.getValue() + " " + tempSuPacket.attackerId));
-			player.sendPacket(new Packet("ncif " + tempSuPacket.attackedType.getValue() + " " + tempSuPacket.attackedId));
+			player.sendPacket(
+					new Packet("ncif " + tempSuPacket.attackerType.getValue() + " " + tempSuPacket.attackerId));
+			player.sendPacket(
+					new Packet("ncif " + tempSuPacket.attackedType.getValue() + " " + tempSuPacket.attackedId));
 			if (tempSuPacket.isAlive == false && tempSuPacket.attackedType == UserType.Monster) {
 				player.map.Mobs.remove(tempSuPacket.attackedId);
 			}
 			if (tempSuPacket.isAlive == false && tempSuPacket.attackerId == player.id) {
 				player.addGameEvent(new IKilledAMobGameEvent());
-				if(battleHandler.target.id==tempSuPacket.attackedId)
+				if (battleHandler.target.id == tempSuPacket.attackedId)
 					battleHandler.target = null;
 			}
 			if (tempSuPacket.attackerId != player.id || tempSuPacket.attackedId != player.id
@@ -59,13 +62,15 @@ public class BattlePacketEventListener extends PacketEventListener{
 			if (tempSuPacket.attackedType == UserType.Player && tempSuPacket.attackedId == player.id) {
 				player.HP -= tempSuPacket.damage;
 				if (tempSuPacket.attackerType == UserType.Monster)
-					player.addGameEvent(new MeHitGameEvent(player.map.Mobs.get(tempSuPacket.attackerId),
-							tempSuPacket.damage));
+					player.addGameEvent(
+							new MeHitGameEvent(player.map.Mobs.get(tempSuPacket.attackerId), tempSuPacket.damage));
 			}
 
 			if (tempSuPacket.attackerId == player.id) {
 				// me attacking target
-				player.addGameEvent(new SkillHitGameEvent(Resources.getSkill((int)tempSuPacket.skillVNum),tempSuPacket.damage));
+				battleHandler.lastSkillRequest = null;
+				player.addGameEvent(
+						new SkillHitGameEvent(Resources.getSkill((int) tempSuPacket.skillVNum), tempSuPacket.damage));
 			}
 			break;
 		}

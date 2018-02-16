@@ -17,13 +17,12 @@ public class IvnPacket extends Packet {
 	public IvnPacket(String str) {
 		super(str);
 		// ivn 1 1.1012.17.0
-		inventoryType = InventoryType.values()[Integer.parseInt(parameters[1])];
-		String[] itemSplited = parameters[2].split(".");
+		inventoryType = InventoryType.values()[Integer.parseInt(this.getParameter(1))];
+		String[] itemSplited = this.getParameter(2).split("\\.");
 		slot = Short.parseShort(itemSplited[0]);
 		itemVNum = Short.parseShort(itemSplited[1]);
-		if(Short.parseShort(itemSplited[1])==-1)
-		{
-			isDelete=true;
+		if (Short.parseShort(itemSplited[1]) == -1) {
+			isDelete = true;
 		}
 		try {
 			switch (inventoryType) {
@@ -59,7 +58,7 @@ public class IvnPacket extends Packet {
 				break;
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 
 	}

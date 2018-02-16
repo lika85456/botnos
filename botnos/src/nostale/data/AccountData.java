@@ -8,23 +8,21 @@ public class AccountData {
 	public int Channel;
 	public int Character;
 	public CServer Nation;
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String toRet = "";
-		toRet+=name+"\n";
-		toRet+=nickname+"\n";
-		toRet+=password+"\n";
-		toRet+=Server+"\n";
-		toRet+=Channel+"\n";
-		toRet+=Character+"\n";
-		toRet+=Nation.name()+"\n";
+		toRet += name + "\n";
+		toRet += nickname + "\n";
+		toRet += password + "\n";
+		toRet += Server + "\n";
+		toRet += Channel + "\n";
+		toRet += Character + "\n";
+		toRet += Nation.name() + "\n";
 		return toRet;
 	}
-	
-	public static AccountData fromString(String[] data)
-	{
+
+	public static AccountData fromString(String[] data) {
 		AccountData toRet = new AccountData();
 		toRet.name = data[0];
 		toRet.nickname = data[1];

@@ -101,6 +101,6 @@ public class Character {
 	public int TalentWin;
 
 	public int Speed;
-	
+
 	public Boolean WhisperBlocked;
 }

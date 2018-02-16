@@ -44,7 +44,6 @@ public class Connection {
 
 	}
 
-
 	public ArrayList<Integer> getReceived() {
 		ArrayList<Integer> received = new ArrayList<Integer>();
 		try {
@@ -64,12 +63,12 @@ public class Connection {
 	 * @param String packet - RAW packet to send
 	 * 
 	 */
-	public void send(String packet){
+	public void send(String packet) {
 
 		// outToServer.writeBytes(packet);
 		for (int i = 0; i < packet.length(); i++) {
 			char c = packet.charAt(i);
-			//byte first = (byte) (c >> 8 << 8);
+			// byte first = (byte) (c >> 8 << 8);
 			byte second = (byte) (c << 8 >> 8);
 			try {
 				outToServer.writeByte(second);

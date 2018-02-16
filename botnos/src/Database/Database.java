@@ -18,12 +18,12 @@ public class Database {
 	}
 
 	public static String load(String file) {
-			String[] lines = FileLoader.loadFile(file);
-			String toReturn = "";
-			for (int i = 0; i < lines.length; i++) {
-				toReturn += lines[i] + "\n";
-			}
-			return toReturn;
+		String[] lines = FileLoader.loadFile(file);
+		String toReturn = "";
+		for (int i = 0; i < lines.length; i++) {
+			toReturn += lines[i] + "\n";
+		}
+		return toReturn;
 
 	}
 
